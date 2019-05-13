@@ -34,7 +34,8 @@
     "drupal/drupal-library-installer-plugin": "^0.3",
     "t324inc/d324_core": "8.7.x-dev",
     "t324inc/d324_media": "8.7.x-dev",
-    "t324inc/d324_blog": "8.7.x-dev"
+    "t324inc/d324_blog": "8.7.x-dev",
+    "t324inc/d324theme": "8.7.x-dev"
   },
   "require-dev": {
     "phing/phing": "~2.0"
@@ -80,7 +81,9 @@
     "installer-paths": {
       "web/core": ["type:drupal-core"],
       "web/profiles/{$name}": ["type:drupal-profile"],
+      "web/modules/d324/{$name}": ["type:drupal-module","vendor:t324inc"],
       "web/modules/contrib/{$name}": ["type:drupal-module"],
+      "web/themes/d324/{$name}": ["type:drupal-theme","vendor:t324inc"],
       "web/themes/contrib/{$name}": ["type:drupal-theme"],
       "web/libraries/slick": ["npm-asset/slick-carousel"],
       "web/libraries/{$name}": [
