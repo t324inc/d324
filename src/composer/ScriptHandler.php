@@ -85,7 +85,7 @@ class ScriptHandler {
             $fs->mkdir($drupal_root . '/' . $drupal_private, 0775);
             $fs->touch($drupal_root . '/'. $drupal_private . '/.gitkeep');
             umask($oldmask);
-            $event->getIO()->write("Created a " . $drupal_private . " directory with chmod 0755");
+            $event->getIO()->write("Created a " . $drupal_private . " directory with chmod 0775");
         }
 
         $drupal_temp = getenv('DRUPAL_TEMP') ? getenv('DRUPAL_TEMP') : '../tmp';
