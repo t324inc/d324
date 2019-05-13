@@ -1,3 +1,4 @@
+$settings['hash_salt'] = 'jP0SKUmK0iyHUzhKXwDlR2YnjbvTkFSLFrYeXm2TjYUCgQv_a63C66MglqDYF-XVvUdsR0JvgA';
 
 /**
  * Load site mode specific settings.php extension files
