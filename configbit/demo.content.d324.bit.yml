@@ -1,0 +1,11 @@
+# ==============================================================================
+# List of d324 demo components, which they will be listed under the
+# Extra components installation step, in the Demo content section.
+# ==============================================================================
+config_bit:
+  type: list
+  for: d324.info.yml
+  when:
+    show_demo: false
+    list:
+      dependencies:

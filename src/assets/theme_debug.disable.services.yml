@@ -1,0 +1,6 @@
+# Theme Debug Override - Enable
+#
+# Overrides theme debug, included when setting is added to .env
+parameters:
+  twig.config:
+    debug: false

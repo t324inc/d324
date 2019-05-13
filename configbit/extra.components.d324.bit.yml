@@ -1,0 +1,11 @@
+# ==============================================================================
+# List of extra d324 components, which they will be listed in the
+# Extra components form, when we install d324.
+# ==============================================================================
+config_bit:
+  type: list
+  for: d324.info.yml
+  when:
+    show_extra_components: true
+    list:
+      dependencies:

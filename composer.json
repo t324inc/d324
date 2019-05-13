@@ -1,0 +1,107 @@
+{
+  "name": "t324inc/d324",
+  "description": "D324 - T324 Drupal 8 Distribution",
+  "type": "drupal-profile",
+  "license": "GPL-2.0-or-later",
+  "minimum-stability": "dev",
+  "prefer-stable": true,
+  "authors": [
+    {
+      "name": "Brian Nowell",
+      "homepage": "https://www.t324.com",
+      "role": "Maintainer"
+    }
+  ],
+  "repositories": {
+    "t324": {
+      "type": "composer",
+      "url": "https://t324inc.github.io/satis/"
+    },
+    "drupal": {
+      "type": "composer",
+      "url": "https://packages.drupal.org/8"
+    },
+    "assets": {
+      "type": "composer",
+      "url": "https://asset-packagist.org"
+    }
+  },
+  "require": {
+    "composer/installers": "~1.0",
+    "oomphinc/composer-installers-extender": "~1.0",
+    "cweagans/composer-patches": "~1.0",
+    "drupal-composer/drupal-scaffold": "~2.0",
+    "drupal/drupal-library-installer-plugin": "^0.3",
+    "t324inc/d324_core": "7.x-dev"
+  },
+  "require-dev": {
+    "phing/phing": "~2.0"
+  },
+  "config": {
+    "bin-dir": "bin/",
+    "secure-http": false,
+    "preferred-install": {
+      "drupal/core": "dist"
+    }
+  },
+  "autoload": {
+    "psr-4": {
+      "D324\\composer\\": "src/composer"
+    }
+  },
+  "scripts": {
+    "drupal-scaffold": "DrupalComposer\\DrupalScaffold\\Plugin::scaffold",
+    "pre-install-cmd": ["D324\\composer\\ScriptHandler::checkComposerVersion"],
+    "pre-update-cmd": ["D324\\composer\\ScriptHandler::checkComposerVersion"],
+    "post-install-cmd": [
+      "D324\\composer\\ScriptHandler::createRequiredFiles",
+      "D324\\composer\\ScriptHandler::removeGitDirectories",
+      "@composer drupal-scaffold",
+      "./bin/phing push"
+    ],
+    "post-update-cmd": [
+      "D324\\composer\\ScriptHandler::createRequiredFiles",
+      "D324\\composer\\ScriptHandler::removeGitDirectories",
+      "./bin/phing push"
+    ],
+    "post-drupal-scaffold-cmd": ["D324\\composer\\ScriptHandler::postDrupalScaffoldProcedure"],
+    "create-new-d324theme": "scripts/create-new-d324theme.sh"
+  },
+  "extra": {
+    "branch-alias": {
+      "dev-8.x-7.x": "8.7.x-dev"
+    },
+    "installer-types": [
+      "bower-asset",
+      "npm-asset"
+    ],
+    "installer-paths": {
+      "web/core": ["type:drupal-core"],
+      "web/profiles/{$name}": ["type:drupal-profile"],
+      "web/modules/contrib/{$name}": ["type:drupal-module"],
+      "web/themes/contrib/{$name}": ["type:drupal-theme"],
+      "web/libraries/slick": ["npm-asset/slick-carousel"],
+      "web/libraries/{$name}": [
+        "type:drupal-library",
+        "type:bower-asset",
+        "type:npm-asset"
+      ],
+      "web/modules/custom/{$name}": ["type:drupal-custom-module"],
+      "web/themes/custom/{$name}": ["type:drupal-custom-theme"],
+      "drush/contrib/{$name}": ["type:drupal-drush"]
+    },
+    "drupal-libraries": {
+      "library-directory": "web/libraries",
+      "libraries": [
+        {"name": "dropzone","package": "npm-asset/dropzone"},
+        {"name": "blazy", "package": "npm-asset/blazy"},
+        {"name": "slick", "package": "npm-asset/slick-carousel"}
+      ]
+    },
+    "enable-patching": true,
+    "composer-exit-on-patch-failure": true,
+    "patchLevel": {
+      "drupal/core": "-p2"
+    }
+  }
+}

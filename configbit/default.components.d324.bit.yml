@@ -1,0 +1,14 @@
+# ==============================================================================
+# List of default d324 components, which they will be installed
+# when we install d324.
+# ==============================================================================
+config_bit:
+  type: list
+  for: d324.info.yml
+  when:
+    install_default_components: true
+    list:
+      dependencies:
+        # Enable listed modules in order at this installation step. 
+        - libraries
+        # Enable listed D324 modules in order at this installation step.

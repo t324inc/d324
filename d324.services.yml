@@ -1,0 +1,12 @@
+services:
+  d324.form_helper:
+    class: '\Drupal\d324\Form\FormHelper'
+    arguments:
+      - '@element_info'
+  d324.config_bit:
+    class: '\Drupal\d324\Config\ConfigBit'
+    arguments:
+      - '@element_info'
+  d324.definition_update_manager:
+    class: '\Drupal\d324\Entity\D324EntityDefinitionUpdateManager'
+    arguments: ['@class_resolver', '@entity.definition_update_manager']

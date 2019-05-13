@@ -1,0 +1,72 @@
+
+/**
+ * Load site mode specific settings.php extension files
+ *
+ */
+
+if(getenv('DRUPAL_SITE_MODE') &&
+  file_exists($app_root . '/' . $site_path . '/' . getenv('DRUPAL_SITE_MODE') . '.settings.php')) {
+  include $app_root . '/' . $site_path . '/' . getenv('DRUPAL_SITE_MODE') . '.settings.php';
+} else {
+  $settings['container_yamls'][] = $app_root . '/' . $site_path . '/services.yml';
+}
+
+/*
+ * Set the Drupal file directory paths
+ */
+$settings['file_public_path'] = getenv('DRUPAL_PUBLIC') ? getenv('DRUPAL_PUBLIC') : 'sites/default/files';
+$settings['file_private_path'] = getenv('DRUPAL_PRIVATE') ? getenv('DRUPAL_PRIVATE') : '../private';
+$config['system.file']['path']['temporary'] =  getenv('DRUPAL_TEMP') ? getenv('DRUPAL_TEMP') : '../tmp';
+
+/**
+ * Set the trusted host patterns
+ */
+$settings['trusted_host_patterns'] = explode(",", getenv('TRUSTED_HOSTS'));
+
+$config_directories['sync'] = '../config/sync';
+
+$databases['default']['default'] = [
+  'database' => getenv('MYSQL_DATABASE'),
+  'host' => getenv('MYSQL_HOSTNAME'),
+  'password' => getenv('MYSQL_PASSWORD'),
+  'port' => getenv('MYSQL_PORT'),
+  'prefix' => '',
+  'username' => getenv('MYSQL_USER'),
+  'namespace' => 'Drupal\\Core\\Database\\Driver\\mysql',
+  'driver' => 'mysql',
+];
+
+/**
+ ** Redis Configuration.
+ */
+if (getenv('REDIS_ENABLED')) {
+  if (getenv('REDIS_HOST')) {
+    $settings['redis.connection']['host'] = getenv('REDIS_HOST');
+    $settings['redis.connection']['port'] = getenv('REDIS_PORT') ? getenv('REDIS_PORT') : NULL;
+  } elseif (getenv('REDIS_SOCKET')) {
+    $settings['redis.connection']['host'] = getenv('REDIS_SOCKET');
+    $settings['redis.connection']['port'] = NULL;
+  }
+  $settings['redis.connection']['interface'] = 'PhpRedis';
+  $settings['cache']['default'] = 'cache.backend.redis';
+  // Note that unlike memcached, redis persists cache items to disk so we can
+  // actually store cache_class_cache_form in the default cache.
+  $settings['cache_prefix'] = getenv('REDIS_PREFIX');
+  // Always set the fast backend for bootstrap, discover and config, otherwise
+  // this gets lost when redis is enabled.
+  $settings['cache']['bins']['bootstrap'] = 'cache.backend.chainedfast';
+  $settings['cache']['bins']['discovery'] = 'cache.backend.chainedfast';
+  $settings['cache']['bins']['config'] = 'cache.backend.chainedfast';
+  $settings['container_yamls'][] = 'modules/contrib/redis/example.services.yml';
+}
+
+/**
+ ** Theme Debug Override
+ */
+if (getenv('DRUPAL_THEME_DEBUG') !== FALSE) {
+  if (getenv('DRUPAL_THEME_DEBUG') == 1) {
+    $settings['container_yamls'][] = $app_root . '/' . $site_path . '/theme_debug.enable.services.yml';
+  } else {
+    $settings['container_yamls'][] = $app_root . '/' . $site_path . '/theme_debug.disable.services.yml';
+  }
+}

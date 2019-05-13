@@ -1,0 +1,20 @@
+name: D324
+type: profile
+description: 'D324 is an enhanced Drupal 8 installation profile developed by T324.'
+core: 8.x
+project: d324
+distribution:
+  name: D324
+  install:
+    theme: adminimal_theme
+version: 8.x-7.1
+install:
+  - system
+  - action
+  - user
+  - node
+  - block
+  - help
+themes:
+  - adminimal_theme
+  - radix
