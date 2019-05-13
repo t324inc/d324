@@ -12,3 +12,6 @@ config_bit:
         # Enable listed modules in order at this installation step. 
         - libraries
         # Enable listed D324 modules in order at this installation step.
+        - d324_core
+        - d324_admin
+        - d324_update_helper

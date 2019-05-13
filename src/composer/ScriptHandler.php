@@ -56,6 +56,11 @@ class ScriptHandler {
             $fs->copy($drupal_root . '/sites/default/default.settings.php', $drupal_root . '/sites/default/settings.php');
             $fs->chmod($drupal_root . '/sites/default/settings.php', 0666);
             $event->getIO()->write("Create a sites/default/settings.php file with chmod 0666");
+            // Alter settings.php file.
+            $settings = fopen($drupal_root . '/sites/default/settings.php', 'a+');
+            $settings_extra = file_get_contents($drupal_root . '/profiles/d324/src/assets/settings_extra');
+            fwrite($settings, $settings_extra);
+            fclose($settings);
         }
 
         // Prepare the services file for installation.
@@ -77,7 +82,7 @@ class ScriptHandler {
         $drupal_private = getenv('DRUPAL_PRIVATE') ? getenv('DRUPAL_PRIVATE') : '../private';
         if ($drupal_private && !$fs->exists($drupal_root . '/' . $drupal_private)) {
             $oldmask = umask(0);
-            $fs->mkdir($drupal_root . '/' . $drupal_private, 0755);
+            $fs->mkdir($drupal_root . '/' . $drupal_private, 0775);
             $fs->touch($drupal_root . '/'. $drupal_private . '/.gitkeep');
             umask($oldmask);
             $event->getIO()->write("Created a " . $drupal_private . " directory with chmod 0755");
@@ -179,11 +184,7 @@ class ScriptHandler {
         if ($fs->exists($drupal_root . '/sites/default/settings.php')
             && $fs->exists($drupal_root . '/profiles/d324/src/assets/settings_extra')) {
 
-            // Alter settings.php file.
-            $settings = fopen($drupal_root . '/sites/default/settings.php', 'a+');
-            $settings_extra = file_get_contents($drupal_root . '/profiles/d324/src/assets/settings_extra');
-            fwrite($settings, $settings_extra);
-            fclose($settings);
+
         }
 
         if ($fs->exists($drupal_root . '/.htaccess')

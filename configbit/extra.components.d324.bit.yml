@@ -9,3 +9,8 @@ config_bit:
     show_extra_components: true
     list:
       dependencies:
+        d324_blog:
+          title: "D324 Blog"
+          description: "Provides a basic blog functionality."
+          selected: false
+          config_form: false

@@ -9,3 +9,8 @@ config_bit:
     show_demo: false
     list:
       dependencies:
+        d324_demo:
+          title: "Install Demo Content"
+          description: "Basic starter site demo content"
+          selected: false
+          config_form: false
