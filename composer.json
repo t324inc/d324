@@ -81,10 +81,8 @@
     ],
     "installer-paths": {
       "web/core": ["type:drupal-core"],
-      "web/profiles/{$name}": ["type:drupal-profile"],
       "web/modules/d324/{$name}": ["type:drupal-module","vendor:t324inc"],
       "web/modules/contrib/{$name}": ["type:drupal-module"],
-      "web/themes/d324/{$name}": ["type:drupal-theme","vendor:t324inc"],
       "web/themes/contrib/{$name}": ["type:drupal-theme"],
       "web/libraries/slick": ["npm-asset/slick-carousel"],
       "web/libraries/{$name}": [
