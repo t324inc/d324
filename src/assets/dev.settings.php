@@ -1,6 +1,5 @@
 <?php
 
-$settings['container_yamls'][] = DRUPAL_ROOT . '/sites/default/dev.services.yml';
 $config['system.logging']['error_level'] = 'verbose';
 $config['system.performance']['css']['preprocess'] = FALSE;
 $config['system.performance']['js']['preprocess'] = FALSE;

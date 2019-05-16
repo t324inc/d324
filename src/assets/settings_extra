@@ -5,22 +5,27 @@ $settings['hash_salt'] = 'jP0SKUmK0iyHUzhKXwDlR2YnjbvTkFSLFrYeXm2TjYUCgQv_a63C66
  *
  */
 
+$settings['container_yamls'][] = $app_root . '/' . $site_path . '/services.yml';
+
 if(getenv('DRUPAL_SITE_MODE') &&
   file_exists($app_root . '/' . $site_path . '/' . getenv('DRUPAL_SITE_MODE') . '.settings.php')) {
   include $app_root . '/' . $site_path . '/' . getenv('DRUPAL_SITE_MODE') . '.settings.php';
-} else {
-  $settings['container_yamls'][] = $app_root . '/' . $site_path . '/services.yml';
 }
 
-/*
- * Set the Drupal file directory paths
+if(getenv('DRUPAL_SITE_MODE') &&
+  file_exists($app_root . '/' . $site_path . '/' . getenv('DRUPAL_SITE_MODE') . '.services.yml')) {
+  include $app_root . '/' . $site_path . '/' . getenv('DRUPAL_SITE_MODE') . '.services.yml';
+}
+
+/**
+ ** Set the Drupal file directory paths
  */
 $settings['file_public_path'] = getenv('DRUPAL_PUBLIC') ? getenv('DRUPAL_PUBLIC') : 'sites/default/files';
 $settings['file_private_path'] = getenv('DRUPAL_PRIVATE') ? getenv('DRUPAL_PRIVATE') : '../private';
 $config['system.file']['path']['temporary'] =  getenv('DRUPAL_TEMP') ? getenv('DRUPAL_TEMP') : '../tmp';
 
 /**
- * Set the trusted host patterns
+ ** Set the trusted host patterns
  */
 $settings['trusted_host_patterns'] = explode(",", getenv('TRUSTED_HOSTS'));
 
