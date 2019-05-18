@@ -14,7 +14,7 @@ if(getenv('DRUPAL_SITE_MODE') &&
 
 if(getenv('DRUPAL_SITE_MODE') &&
   file_exists($app_root . '/' . $site_path . '/' . getenv('DRUPAL_SITE_MODE') . '.services.yml')) {
-  include $app_root . '/' . $site_path . '/' . getenv('DRUPAL_SITE_MODE') . '.services.yml';
+  $settings['container_yamls'][] = $app_root . '/' . $site_path . '/' . getenv('DRUPAL_SITE_MODE') . '.services.yml';
 }
 
 /**
