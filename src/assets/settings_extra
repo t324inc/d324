@@ -45,25 +45,28 @@ $databases['default']['default'] = [
 /**
  ** Redis Configuration.
  */
-if (getenv('REDIS_ENABLED')) {
-  if (getenv('REDIS_HOST')) {
-    $settings['redis.connection']['host'] = getenv('REDIS_HOST');
-    $settings['redis.connection']['port'] = getenv('REDIS_PORT') ? getenv('REDIS_PORT') : NULL;
-  } elseif (getenv('REDIS_SOCKET')) {
-    $settings['redis.connection']['host'] = getenv('REDIS_SOCKET');
-    $settings['redis.connection']['port'] = NULL;
+// Change kint maxLevels setting:
+if(file_exists($app_root . '/modules/contrib/devel/kint/kint/Kint.class.php')) {
+  if (getenv('REDIS_ENABLED')) {
+    if (getenv('REDIS_HOST')) {
+      $settings['redis.connection']['host'] = getenv('REDIS_HOST');
+      $settings['redis.connection']['port'] = getenv('REDIS_PORT') ? getenv('REDIS_PORT') : NULL;
+    } elseif (getenv('REDIS_SOCKET')) {
+      $settings['redis.connection']['host'] = getenv('REDIS_SOCKET');
+      $settings['redis.connection']['port'] = NULL;
+    }
+    $settings['redis.connection']['interface'] = 'PhpRedis';
+    $settings['cache']['default'] = 'cache.backend.redis';
+    // Note that unlike memcached, redis persists cache items to disk so we can
+    // actually store cache_class_cache_form in the default cache.
+    $settings['cache_prefix'] = getenv('REDIS_PREFIX');
+    // Always set the fast backend for bootstrap, discover and config, otherwise
+    // this gets lost when redis is enabled.
+    $settings['cache']['bins']['bootstrap'] = 'cache.backend.chainedfast';
+    $settings['cache']['bins']['discovery'] = 'cache.backend.chainedfast';
+    $settings['cache']['bins']['config'] = 'cache.backend.chainedfast';
+    $settings['container_yamls'][] = $app_root . '/modules/contrib/redis/example.services.yml';
   }
-  $settings['redis.connection']['interface'] = 'PhpRedis';
-  $settings['cache']['default'] = 'cache.backend.redis';
-  // Note that unlike memcached, redis persists cache items to disk so we can
-  // actually store cache_class_cache_form in the default cache.
-  $settings['cache_prefix'] = getenv('REDIS_PREFIX');
-  // Always set the fast backend for bootstrap, discover and config, otherwise
-  // this gets lost when redis is enabled.
-  $settings['cache']['bins']['bootstrap'] = 'cache.backend.chainedfast';
-  $settings['cache']['bins']['discovery'] = 'cache.backend.chainedfast';
-  $settings['cache']['bins']['config'] = 'cache.backend.chainedfast';
-  $settings['container_yamls'][] = 'modules/contrib/redis/example.services.yml';
 }
 
 /**
