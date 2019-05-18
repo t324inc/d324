@@ -6,7 +6,7 @@ project: d324
 distribution:
   name: D324
   install:
-    theme: adminimal_theme
+    theme: seven
 version: 8.x-7.1
 install:
   - system
@@ -18,3 +18,4 @@ install:
 themes:
   - adminimal_theme
   - radix
+  - d324theme
