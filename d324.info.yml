@@ -6,7 +6,7 @@ project: d324
 distribution:
   name: D324
   install:
-    theme: seven
+    theme: d324theme_admin
 version: 8.x-7.1
 install:
   - system
@@ -16,6 +16,7 @@ install:
   - block
   - help
 themes:
-  - adminimal_theme
   - radix
   - d324theme
+  - adminimal_theme
+  - d324theme_admin
