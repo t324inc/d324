@@ -13,7 +13,7 @@ config_bit:
         - libraries
         # Enable listed D324 modules in order at this installation step.
         - d324_core
-        - d324_copyright_block
         - d324_media
         - d324_admin
         - d324_update_helper
+        - d324_default_content
