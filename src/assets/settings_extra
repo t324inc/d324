@@ -72,10 +72,9 @@ if(file_exists($app_root . '/modules/contrib/devel/kint/kint/Kint.class.php')) {
 /**
  ** Theme Debug Override
  */
-if (getenv('DRUPAL_THEME_DEBUG') !== FALSE) {
-  if (getenv('DRUPAL_THEME_DEBUG') == 1) {
-    $settings['container_yamls'][] = $app_root . '/' . $site_path . '/theme_debug.enable.services.yml';
-  } else {
-    $settings['container_yamls'][] = $app_root . '/' . $site_path . '/theme_debug.disable.services.yml';
-  }
+if (getenv('DRUPAL_THEME_DEBUG') === '1') {
+  $settings['container_yamls'][] = $app_root . '/' . $site_path . '/theme_debug.enable.services.yml';
+}
+if (getenv('DRUPAL_THEME_DEBUG') === '0') {
+  $settings['container_yamls'][] = $app_root . '/' . $site_path . '/theme_debug.disable.services.yml';
 }
