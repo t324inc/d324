@@ -31,6 +31,13 @@ function d324_form_install_configure_form_alter(&$form, FormStateInterface $form
     $form['admin_account']['account']['name']['#attributes']['disabled'] = TRUE;
     $form['admin_account']['account']['mail']['#default_value'] = 'drupal@t324.com';
     $form['admin_account']['account']['mail']['#description'] = t('In most case, and for <a target="_blank" href="@link">T324</a> specific use, we recommend this to always be <em>drupal@t324.com</em>.', array('@link' => 'http://t324.com'));
+
+    // Default country and timezone
+    $form['regional_settings']['site_default_country']['#default_value'] = 'US';
+    $form['regional_settings']['date_default_timezone']['#default_value'] = 'America/Los_Angeles';
+
+    // Don't receive email notifications by default
+    $form['update_notifications']['enable_update_status_emails']['#default_value'] = 0;
 }
 
 /**
