@@ -1,4 +1,4 @@
 bootstrap:
-  library_version: "4.0.0"
-default_themes_creation_path: "themes/custom"
-default_theme_name: "d324theme_subtheme"
+  library_version: "4.3.1"
+default_themes_creation_path: "themes/d324"
+default_theme_name: "d324_subtheme"
