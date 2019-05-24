@@ -42,7 +42,7 @@ if [[ "${drupal_root: -21}" == "profiles/d324/scripts" ]]; then
   drupal_root="${drupal_root::-21}";
 fi
 
-if [[ "${drupal_root: -13" == "profiles/d324" ]]; then
+if [[ "${drupal_root: -13}" == "profiles/d324" ]]; then
   drupal_root="${drupal_root::-13}";
 fi
 
@@ -72,13 +72,11 @@ if [ ! -z "$1" ]; then
     echo "---------------------------------------------------------------------------";
     echo "   Theme name is not a valid theme name!                                   ";
     echo "---------------------------------------------------------------------------";
-    exit 1;
   fi
 else
   echo "---------------------------------------------------------------------------";
   echo "   Please add the name of your theme!                                      ";
   echo "---------------------------------------------------------------------------";
-  exit 1;
 fi
 
 
@@ -90,15 +88,16 @@ mkdir -p ${theme_path};
 if [[ ! -d "$theme_path/$theme_name" ]]; then
 
   # 1. Copy the D324THEME_SUBTHEME folder to your custom theme location.
+
   cp -r ${drupal_root}/themes/d324/d324theme/SUBTHEME_KIT ${theme_path}/${theme_name};
 
-  find ${theme_path}/${theme_name} -name "*d324_subtheme*" -exec sh -c 'echo mv "$1" "$(echo "$1" | sed s/d324_subtheme/${$theme_name)/"' _ {} \;
+  find ${theme_path}/${theme_name} -name '*d324_subtheme*' -type f -exec bash -c 'mv "$1" "${1/\/d324_subtheme/theme_name/}"' -- {} \;
 
-  find ${theme_path}/${theme_name} -type f | xargs sed -i  's/D324_SUBTHEME_MACHINE_NAME/test_name/g'
+  find ${theme_path}/${theme_name} -name "*d324_subtheme*" -exec rename "s/d324_subtheme/$theme_name/" {} ";"
 
-  # 9. Replace all D324THEME_SUBTHEME with the machine name of your theme.
-  # grep -rl 'D324_SUBTHEME_MACHINE_NAME' ${theme_path}/${theme_name} | xargs sed -i "s/D324_SUBTHEME_MACHINE_NAME/${theme_name}/g" ;
-  # grep -rl 'D324_SUBTHEME_NAME' ${theme_path}/${theme_name} | xargs sed -i "s/*D324_SUBTHEME_NAME*/${theme_name}/g" ;
+  find ${theme_path}/${theme_name} -type f | xargs sed -i  "s/D324_SUBTHEME_MACHINE_NAME/$theme_name/g" ;
+
+  find ${theme_path}/${theme_name} -type f | xargs sed -i  "s/D324_SUBTHEME_NAME/$theme_name/g" ;
 
   # 10. Install needed libraries
   cd ${theme_path}/${theme_name};
