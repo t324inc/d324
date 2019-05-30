@@ -16,7 +16,6 @@ install:
   - block
   - help
 themes:
-  - radix
   - d324theme
   - adminimal_theme
   - d324theme_admin
