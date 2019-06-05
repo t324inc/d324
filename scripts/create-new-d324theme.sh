@@ -99,6 +99,8 @@ if [[ ! -d "$theme_path/$theme_name" ]]; then
 
   find ${theme_path}/${theme_name} -type f | xargs sed -i  "s/D324_SUBTHEME_NAME/$theme_name/g" ;
 
+  sed "s/hidden: true/hidden: false/g" ${theme_path}/${theme_name}/${theme_name}.info.yml ;
+
   # 10. Install needed libraries
   cd ${theme_path}/${theme_name};
   npm install;
