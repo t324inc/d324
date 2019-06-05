@@ -28,32 +28,10 @@ After we make sure that we do have all the tools we could change directory
  in the terminal to:
 
 ```
-$ cd PROJECT_DIR_NAME/docroot/profiles/d324/scripts
-$ bash ./create-new-d324theme.sh "THEME_NAME"
+$ cd PROJECT_DIR_NAME/web/profiles/d324/scripts
+$ bash ./create-new-d324theme.sh
 ```
 
 * Activate your new sub theme by going to Appearance in our D324 site.
 * Search for THEME_NAME of the generated new sub theme and click on Install
  and set as default.
-* Go to the home page to check if the theme is showing up.
-* then we can change directory to our sub theme in the terminal to test compile
- our SASS files to CSS
-
-```
-$ cd PROJECT_DIR_NAME/docroot/themes/custom/THEME_NAME
-$ gulp
-[10:55:40] Using gulpfile PROJECT_DIR_NAME/docroot/themes/custom/THEME_NAME/gulpfile.js
-[10:55:40] Starting 'default'...
-[10:55:40] Starting 'compile'...
-[10:55:42] Finished 'compile' after 2.44 s
-[10:55:42] Starting 'move_bootstrap_js_files'...
-[10:55:43] Finished 'move_bootstrap_js_files' after 18 ms
-[10:55:43] Starting 'move_popper_js_files'...
-[10:55:43] Finished 'move_popper_js_files' after 3.89 ms
-[10:55:43] Starting 'watch'...
-```
-
-We may want to increase our maximum watched SASS files by
-```
-$ echo fs.inotify.max_user_watches=524288 | sudo tee -a /etc/sysctl.conf && sudo sysctl -p
-```

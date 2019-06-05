@@ -60,25 +60,77 @@ echo "Drupal root: $drupal_root";
 # Read scripts.settings.yml file
 eval $(parse_yaml $drupal_root/profiles/d324/scripts/scripts.settings.yml);
 
-# Default theme name.
-theme_name=$default_theme_name;
-
-# Grab the theme name argument.
 if [ ! -z "$1" ]; then
-  arg1="$1";
-  if [[ $arg1 =~ ^[A-Za-z][A-Za-z0-9_]*$ ]]; then
-    theme_name="$arg1";
-  else
-    echo "---------------------------------------------------------------------------";
-    echo "   Theme name is not a valid theme name!                                   ";
-    echo "---------------------------------------------------------------------------";
-  fi
-else
-  echo "---------------------------------------------------------------------------";
-  echo "   Please add the name of your theme!                                      ";
-  echo "---------------------------------------------------------------------------";
+  theme_name="$1";
 fi
 
+while true; do
+
+  # Grab the theme name argument.
+  if [ ! -z "$theme_name" ]; then
+    if [[ ! $theme_name =~ ^[a-z][a-z0-9_]*$ ]]; then
+      echo "";
+      echo "---------------------------------------------------------------------------";
+      echo "   Theme name is not a valid theme machine name!                           ";
+      echo "   Please re-enter the machine name of your theme.                         ";
+      echo "   It must contain only lowercase letters, numbers, and/or underscores.    ";
+      echo "   The theme machine name must start with a letter, not a number.          ";
+      echo "---------------------------------------------------------------------------";
+      echo "";
+      echo -n "Enter the machine name of the new theme and press [ENTER]: ";
+      read theme_name;
+    else
+      break;
+    fi
+  else
+    echo "";
+    echo "---------------------------------------------------------------------------";
+    echo "   Please add the machine name of your theme.                              ";
+    echo "   It must contain only lowercase letters, numbers, and/or underscores.    ";
+    echo "   The theme machine name must start with a letter, not a number.          ";
+    echo "---------------------------------------------------------------------------";
+    echo "";
+    echo -n "Enter the machine name of the new theme and press [ENTER]: ";
+    read theme_name;
+  fi
+
+done
+
+if [ ! -z "$2" ]; then
+  theme_human_name="$2";
+fi
+
+while true; do
+
+  # Grab the theme name argument.
+  if [ ! -z "$theme_human_name" ]; then
+    if [[ ! $theme_human_name =~ ^[A-Za-z][A-Za-z0-9[:space:]-]*$ ]]; then
+      echo "";
+      echo "---------------------------------------------------------------------------";
+      echo "   Theme name is not a valid theme name!                                   ";
+      echo "   Please re-enter the human-readable name of your theme.                  ";
+      echo "   It must contain only letters, numbers, spaces, or hyphens.              ";
+      echo "   The theme name must start with a letter, not a number.                  ";
+      echo "---------------------------------------------------------------------------";
+      echo "";
+      echo -n "Enter the human-readable name of the new theme and press [ENTER]: ";
+      read theme_human_name;
+    else
+      break;
+    fi
+  else
+    echo "";
+    echo "---------------------------------------------------------------------------";
+    echo "   Please add the human-readable name of your theme.                       ";
+    echo "   It must contain only letters, numbers, spaces, underscores, or hyphens. ";
+    echo "   The theme name must start with a letter, not a number.                  ";
+    echo "---------------------------------------------------------------------------";
+    echo "";
+    echo -n "Enter the human-readable name of the new theme and press [ENTER]: ";
+    read theme_human_name;
+  fi
+
+done
 
 # Default themes creation path.
 theme_path=$drupal_root/$default_themes_creation_path;
@@ -91,15 +143,13 @@ if [[ ! -d "$theme_path/$theme_name" ]]; then
 
   cp -r ${drupal_root}/themes/d324/d324theme/SUBTHEME_KIT ${theme_path}/${theme_name};
 
-  find ${theme_path}/${theme_name} -name '*d324_subtheme*' -type f -exec bash -c 'mv "$1" "${1/\/d324_subtheme/theme_name/}"' -- {} \;
-
   find ${theme_path}/${theme_name} -name "*d324_subtheme*" -exec rename "s/d324_subtheme/$theme_name/" {} ";"
 
   find ${theme_path}/${theme_name} -type f | xargs sed -i  "s/D324_SUBTHEME_MACHINE_NAME/$theme_name/g" ;
 
-  find ${theme_path}/${theme_name} -type f | xargs sed -i  "s/D324_SUBTHEME_NAME/$theme_name/g" ;
+  find ${theme_path}/${theme_name} -type f | xargs sed -i  "s/D324_SUBTHEME_NAME/$theme_human_name/g" ;
 
-  sed "s/hidden: true/hidden: false/g" ${theme_path}/${theme_name}/${theme_name}.info.yml ;
+  sed -i "s/hidden: true/hidden: false/g" ${theme_path}/${theme_name}/${theme_name}.info.yml ;
 
   # 10. Install needed libraries
   cd ${theme_path}/${theme_name};
@@ -112,7 +162,7 @@ if [[ ! -d "$theme_path/$theme_name" ]]; then
   echo "${generated_log}"  >> ${theme_path}/${theme_name}/README.md;
 
   echo "---------------------------------------------------------------------------";
-  echo "   The new D324theme Sub-Theme were created at \"${theme_path}/${theme_name} :) ";
+  echo "   The new D324theme subtheme was created at \"${theme_path}/${theme_name} :) ";
   echo "---------------------------------------------------------------------------";
 
 else
