@@ -153,9 +153,9 @@ class ScriptHandler {
     $fs = new Filesystem();
     $drupal_root = static::getDrupalRoot(getcwd());
 
-    if ($fs->exists($drupal_root . '/profiles/d324/src/assets/robots-staging.txt')) {
+    if ($fs->exists($drupal_root . '/profiles/d324/src/assets/robots.php')) {
       // Create staging robots file.
-      copy($drupal_root . '/profiles/d324/src/assets/robots-staging.txt', $drupal_root . '/robots-staging.txt');
+      copy($drupal_root . '/profiles/d324/src/assets/robots.php', $drupal_root . '/robots.php');
     }
 
     if ($fs->exists($drupal_root . '/profiles/d324/src/assets/dev.services.yml')) {
@@ -181,12 +181,6 @@ class ScriptHandler {
     if ($fs->exists($drupal_root . '/profiles/d324/src/assets/theme_debug.enable.services.yml')) {
       // Create Theme Debug Override Enable File
       copy($drupal_root . '/profiles/d324/src/assets/theme_debug.enable.services.yml', $drupal_root . '/sites/default/theme_debug.enable.services.yml');
-    }
-
-    if ($fs->exists($drupal_root . '/sites/default/settings.php')
-      && $fs->exists($drupal_root . '/profiles/d324/src/assets/settings_extra')) {
-
-
     }
 
     if ($fs->exists($drupal_root . '/.htaccess')

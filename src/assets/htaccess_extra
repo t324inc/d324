@@ -1,7 +1,4 @@
 
-  # This will rewrite robots.txt on non-production environments to robots-staging.txt to disallow robots from indexing.
-  # Example: http://stg.example.com/robots.txt will be rewritten to http://stg.example.com/robots-staging.txt
-  # Comment this out when a site goes live
-
-  RewriteCond %{HTTP_HOST} !^www.example.com$
-  RewriteRule ^robots.txt$ robots-staging.txt [L]
+  # Generate robots.txt dynamically to provide no-index version during dev
+  RewriteEngine on
+  RewriteRule ^robots.txt$ /robots.php [L]
