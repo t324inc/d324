@@ -33,6 +33,7 @@
     "drupal-composer/drupal-scaffold": "~2.0",
     "drupal/drupal-library-installer-plugin": "^0.3",
     "t324inc/d324_core": "8.7.x-dev",
+    "t324inc/geysir": "8.7.x-dev",
     "t324inc/d324_copyright_block": "8.7.x-dev",
     "t324inc/d324_media": "8.7.x-dev",
     "t324inc/d324_blog": "8.7.x-dev",

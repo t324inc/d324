@@ -9,8 +9,28 @@ config_bit:
     show_extra_components: true
     list:
       dependencies:
-        d324_blog:
-          title: "D324 Blog"
+        d324_basic_content_types:
+          title: "D324 Basic Content"
+          description: "Provides basic node content types and related configuration for D324 sites."
+          selected: true
+          config_form: false
+        d324_paragraphs:
+          title: "D324 Paragraphs"
+          description: "Paragraph types and configuration for D324 sites."
+          selected: true
+          config_form: false
+        geysir:
+          title: "D324 Geysir"
+          description: "Front-end paragraph-based editing functionality for D324 sites."
+          selected: true
+          config_form: false
+        d324_seo:
+          title: "D324 SEO"
+          description: "Search Engine Optimization config and tools."
+          selected: true
+          config_form: false
+        d324_blog_posts:
+          title: "D324 Blog Posts"
           description: "Provides a basic blog functionality."
           selected: false
           config_form: false
