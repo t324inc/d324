@@ -19,11 +19,6 @@ config_bit:
           description: "Paragraph types and configuration for D324 sites."
           selected: true
           config_form: false
-        geysir:
-          title: "D324 Geysir"
-          description: "Front-end paragraph-based editing functionality for D324 sites."
-          selected: true
-          config_form: false
         d324_seo:
           title: "D324 SEO"
           description: "Search Engine Optimization config and tools."
